@@ -1,0 +1,419 @@
+---
+import Layout from "../../layouts/Layouts.astro";
+---
+
+<Layout title="Monaco 2026 | Olivia McFadden">
+
+    <header class="project-header">
+
+        <p class="eyebrow">PROJECT · 01</p>
+
+        <h1>
+            Monaco 2026<br />
+            Qualifying Analysis
+        </h1>
+
+        <div class="meta">
+            <span>F1</span>
+            <span>Telemetry Analysis</span>
+            <span>Python</span>
+            <span>FastF1</span>
+        </div>
+
+        <p class="subtitle">
+            How did Kimi Antonelli secure pole position
+            over Max Verstappen?
+        </p>
+
+    </header>
+
+    <section class="section">
+        <p class="section-label">METHODOLOGY</p>
+        <p>
+            The analysis was conducted in Python using FastF1 to extract
+            qualifying telemetry. The full data processing, analysis and 
+            visualisation code is available in the accompanying Jupyter notebook.
+        </p>
+        <a class="github-link" href="https://github.com/omcfadden6-oss/Motorsport-Projects/blob/main/FastF1/monaco_quali2026.ipynb" target="_blank">
+            View the full project on GitHub →
+        </a>
+    </section>
+    
+    <section class="section">
+        <p class="section-label">01 · OVERVIEW</p>
+        <h2>Where was the time gained?</h2>
+        <p class = "text">
+            We first take a look at the data over the whole lap in order to get an overview of how
+            and where exactly the advantages were gained and lost. We start with a simple delta map to 
+            get a visual of where each driver was dominant.
+        </p>
+    </section>
+    <section class="figure-section">
+        <figure>
+            <img
+                src="/images/projects/monaco/delta-track-map.png"
+                alt="Track map showing time delta between Kimi Antonelli and Max Verstappen around Monaco"
+            />
+            <figcaption>
+                Time delta mapped onto the Monaco circuit, highlighting
+                where the lap time advantage develops.
+            </figcaption>
+        </figure>
+    </section>
+    <section class = "section">
+        <p>
+            The evolution of the delta is particularly interesting. Aside from turns 5 and 6, Verstappen 
+            has the advantage over Antonelli for the first half of the lap. Then, at turn 10, the advantage 
+            goes to Antonelli. It's worth noting that this happens after the high speed section of the 
+            track - an area in which the Mercedes car has been particularly dominant. After turn 17, 
+            Verstappen manages to claw back some time, but it is not enough, and Antonelli finishes 0.43 
+            seconds ahead.
+        </p>
+    </section>
+
+    <section class="figure-section">
+        <div class="figure-header">
+            <h2>Looking at the data</h2>
+        </div>    
+        <figure>
+            <img
+                src="/images/projects/monaco/full-lap-telemetry.png"
+                alt="Full lap telemetry comparison between Kimi Antonelli and Max Verstappen at Monaco"
+            />
+
+            <figcaption>
+                Full-lap comparison of time delta, speed, acceleration,
+                throttle and braking.
+            </figcaption>
+        </figure>
+    </section>
+
+    <section class = "section">
+        <p>
+            The lap demonstrates a clear contrast in the drivers' strengths. Verstappen consistently 
+            gains time through later braking and stronger corner entry performance, while Antonelli is 
+            able to recover this time through greater speed retention and stronger corner exits. This 
+            pattern is particularly evident in the final sector, where Verstappen repeatedly recovers 
+            time on corner entry but Antonelli's stronger exits allow him to maintain the overall 
+            advantage. The remaining unexplained changes in delta at Turns 5–6 and the apparent speed 
+            plateaus in Sector 3 provide useful areas for further investigation using racing line, 
+            throttle, gear and RPM data.
+        </p>
+    </section>
+
+    <section class="section">
+
+        <p class="section-label">02 · TURNS 5–6</p>
+
+        <h2>Investigating the Delta Spikes</h2>
+
+    </section>
+
+    <section class="figure-section">
+        <div class="figure-header">
+            <h2>Racing Line</h2>
+
+            <p class = "text">
+                An initial look at the racing lines taken by both drivers shows no clear differences
+                - further analysis is needed to identify where time was lost and gained in this turn
+                sequence.
+            </p>
+        </div>
+        <figure>
+            <img
+                src="/images/projects/monaco/turn-5-6-racing-line.png"
+                alt="Racing line comparison through Turns 5 and 6"
+            />
+
+            <figcaption>
+                Racing line comparison through Turns 5 and 6.
+            </figcaption>
+        </figure>
+
+    </section>
+
+    <section class="figure-section">
+
+        <div class="figure-header">
+            <h2>Throttle, gearing and engine behaviour</h2>
+
+            <p class="text">
+                The differences in speed through Turns 5 and 6 are accompanied
+                by differences in throttle application, gear selection and RPM.
+            </p>
+        </div>
+
+        <figure class="medium-figure">
+            <img
+                src="/images/projects/monaco/turn-5-6-gear.png"
+                alt="Throttle, gear, RPM and braking comparison through Turns 5 and 6"
+            />
+
+            <figcaption>
+                Throttle, gear, RPM and braking through Turns 5 and 6.
+            </figcaption>
+        </figure>   
+    </section>
+
+    <p class ="text">
+        The gear telemetry does a much better job of revealing where the delta changes originate:
+        <br>
+        <br>
+        Antonelli drops down to 1st gear for Turn 5, and the heavy engine braking of 1st gear sheds 
+        his speed rapidly, explaining why he is able to get back on the throttle earlier on exit. 
+        Conversely, Verstappen elects to use 2nd gear for Turn 5, causing his revs to drop, and allowing 
+        Antonelli to gain time on entry. However, avoiding the additional downshift gives Verstappen 
+        more momentum coming out of the corner, allows him to get up to full throttle, while Antonelli 
+        only gets up to around 90%, and lifts earlier. This should give Verstappen a higher apex speed.
+        <br>
+        <br>
+        Turn 6 is a similar story - Antonelli once again uses a lower gear on approach, and is able to 
+        get back on the throttle earlier, with Verstappens use of 3rd gear causing his engine revs to 
+        drop, allowing Antonelli to claw back some time. However, this time Verstappen does a rapid 
+        double downshift, meaning he benefits from more engine braking, stabilizing the rear axle and 
+        allowing him to spend less time on the brake pedal, thus achieving a better exit.
+    </p> 
+
+    <section class="figure-section">
+        <div class="figure-header">
+            <h2>Speed, Acceleration & Braking</h2>
+
+            <p class="text">
+                The speed, acceleration and braking data completes the full picture of how the delta
+                shifts occurred.
+            </p>
+        </div>
+        <figure>
+            <img
+                src="/images/projects/monaco/turn-5-6-overall.png"
+                alt="Telemetry comparison through Turns 5 and 6"
+            />
+
+            <figcaption>
+                Speed, acceleration, braking and time delta through Turns 5 and 6.
+            </figcaption>
+        </figure>
+    </section>
+
+    <p class = "bold">
+        Turn 5 — Antonelli gains through the corner, but Verstappen recovers on exit
+    </p>
+
+    <p class = "text">
+        Looking at the speed trace at ~1050m, it can be seen that Antonelli carries greater speed into the 
+        initial phase of the braking zone and decelerates less aggressively. Additionally, his lower gear 
+        meant that his engine revs were higher on approach, allowing him to gain time on Verstappen. 
+        Antonelli gets back on the throttle first, and continues to gain through the middle of the corner.
+        <br>
+        <br>
+        However, because Antonelli is limited by 1st gear, he carries less momentum through the corner and 
+        his acceleration curve plateaus. Conversely, Verstappen's use of 2nd gear gives him a momentum 
+        advantage, a higher apex speed, and allows him to get up to full throttle and hold it for longer, 
+        while Antonelli peaks at 90% throttle and lifts earlier. Additionally, the brake plot shows that 
+        Verstappen releases the brakes slightly earlier than Antonelli, further contributing to his higher 
+        apex speed. This is how Verstappen gains the advantage back on exit.
+    </p>
+
+    <p class = "bold">
+        Turn 6 — Antonelli gains on entry, but Verstappen's higher corner speed wins out
+    </p>
+    
+    <p class = "text">
+        This time, it is Verstappen who decelerates less aggresively into the corner. However, his slightly 
+        lower speed going into the initial phase of braking causes him to lose time to Antonelli. 
+        Additionally, Antonelli once again uses a lower gear on approach, giving him higher engine revs 
+        and growing his advantage.
+        <br>
+        <br>
+        Verstappens double downshift into the corner means he benefits from more engine braking, allowing 
+        him to spend less time on the brakes and giving him a slightly higher apex speed and subsequently, 
+        a better exit. As a result, the delta switches back in his favour and continues to increase on exit.
+    </p>
+
+    <section class="section">
+        <p class="section-label">03 · TURNS 14–18</p>
+        <h2>Investigating Verstappen's speed plateaus</h2>
+        <p>
+            Verstappen's speed trace through Turns 14–18 exhibited several
+            apparent plateaus. This prompted a closer investigation into the
+            relationship between speed and RPM in this section of the lap.
+        </p>
+    </section>
+
+    <section class="figure-section">
+        <figure class="medium-figure">
+            <img
+                src="/images/projects/monaco/turns-14-18-speed-rpm.png"
+                alt="Speed and RPM comparison through Turns 14 to 18"
+            />
+            <figcaption>
+                Comparison of speed and RPM through Turns 14–18.
+            </figcaption>
+        </figure>
+    </section>
+
+    <p class = "text">
+        The effect is small between Turns 14 and 15, but much more noticeable between Turns 17 and 18. The 
+        scatter plot confirms that the flatlines are not plotting errors caused by gaps in the data, but 
+        that the data logger is actively repeating the same velocity values over consecutive distances 
+        (ironically there is a gap after the plateau at 14-15, but this is not relevant to our investigation).
+        <br>
+        <br>
+        Physically, a car cannot maintain a constant velocity while its engine revs are actively moving. 
+        The RPM graph shows that Verstappens RPM is fluctuating at the point of both plateaus. Because the 
+        engine speed changes continuously during these intervals, the drivetrain is functionally accelerating 
+        and decelerating. This mismatch confirms that the vehicle performance is normal, and rules out 
+        mechanical limits or battery superclipping.
+        <br>
+        <br>
+        Instead, these plateaus are a standard technical artifact of the FastF1 framework's resampling 
+        engine. Because the raw Formula One Management (FOM) telemetry streams for velocity (CarData) and 
+        GPS coordinates (PositionData) are broadcast at different, non-synchronized frequencies, the software 
+        must interpolate the channels onto a single distance axis. When the raw stream updates in coarse 
+        steps or drops packets over brief stretches, the script "holds" the last recorded speed value until 
+        the next update arrives, creating an artificial plateau.
+    </p>
+
+    <section class="section">
+
+        <p class="section-label"> 4 · CONCLUSION</p>
+        <h2>What have we learned?</h2>
+        <p>This telemetry analysis reveals the differences in performance over the lap and highlights critical lessons in data literacy:</p>
+
+        <ul class = "text">
+        <li><strong class = "bold">Differing driver styles:</strong> The battle for pole was ultimately decided by contrasting cornering strategies. While Verstappen optimized apex speed, Antonelli's "slow-in, fast-out" approach won out in the end. By prioritizing an earlier apex, Antonelli was able to unlock earlier throttle application and hold a higher net advantage across the lap.</li>
+        <li><strong class = "bold">The full telemetry picture:</strong> Looking at the speed trace in isolation does not paint a complete picture. As proven in the Turn 5 and 6 analysis, velocity is merely the end product of a complex matrix. To diagnose why a driver is faster, an analyst must look at the interactions between gear selection, engine RPM, throttle application and braking.</li>
+        <li><strong class = "bold">Limitations of data:</strong> Raw telemetry has inherent limitations that warrant caution. GPS sampling rates can cause gaps in data and obscure the racing line taken by a driver. Furthermore, software interpolation effects - such as the artificial speed plateaus Turns 14-15 and 17-18 - should always be cross-references with other data channels before drawing conclusions on vehicle performance.</li>
+        </ul>
+
+    </section>
+    <a class="github-link" href="https://github.com/omcfadden6-oss/Motorsport-Projects/blob/main/FastF1/monaco_quali2026.ipynb" target="_blank">
+        View the full project on GitHub →
+    </a>
+
+</Layout>
+
+<style>
+    .project-header {
+        padding: 0 0 0;
+        max-width: 900px;
+    }
+
+    .eyebrow {
+        color: var(--accent);
+        font-size: 0.8rem;
+        letter-spacing: 0.15em;
+        font-weight: 600;
+        margin-bottom: 1.5rem;
+    }
+
+    h1 {
+        font-size: clamp(3rem, 4vw, 6rem);
+        line-height: 0.95;
+        letter-spacing: -0.04em;
+        margin: 0 0 2rem;
+        text-transform: uppercase;
+    }
+
+    .subtitle {
+        color: var(--secondary);
+        font-size: 1.3rem;
+        line-height: 1.6;
+        max-width: 650px;
+        margin-bottom: 1rem;
+    }
+
+    .meta {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 0.6rem;
+    }
+
+    .meta span {
+        border: 1px solid var(--border);
+        padding: 0.5rem 0.8rem;
+        font-size: 0.8rem;
+        color: var(--secondary);
+    }
+
+    .section {
+        border-top: 1px solid var(--border);
+        padding: 1rem 0;
+        max-width: 800px;
+    }
+
+    .section-label {
+        color: var(--accent);
+        font-size: 0.8rem;
+        letter-spacing: 0.15em;
+        font-weight: 600;
+        margin-bottom: 1rem;
+    }
+
+    .section h2 {
+        font-size: 2rem;
+        margin-bottom: 0.5rem;
+        color:black;
+    }
+
+    .section p:not(.section-label) {
+        color: var(--secondary);
+        font-size: 1.05rem;
+        line-height: 1.5;
+    }
+
+    .figure-section {
+        border-top: 1px solid var(--border);
+        border-bottom: 1px solid var(--border);
+        padding: 1rem 0;
+    }
+
+    .figure-header {
+        max-width: 800px;
+        margin-bottom: 1.5rem;
+    }
+
+    .text {
+        color: var(--secondary);
+        font-size: 1.05rem;
+        line-height: 1.5;        
+    }
+
+    .bold {
+        font-weight: bold;
+        color: black;
+    }
+
+    .figure-section figure {
+        margin: 0;
+    }
+
+    .figure-section img {
+        display: block;
+        width: 100%;
+        height: auto;
+    }
+
+    figcaption {
+        color: var(--secondary);
+        font-size: 0.85rem;
+        line-height: 1.5;
+        margin-top: 1rem;
+    }
+
+    .medium-figure {
+        max-width: 950px;
+    }
+
+    .github-link {
+        display: inline-block;
+        margin-top: 1rem;
+        color: var(--text);
+        text-decoration: none;
+        font-weight: 600;
+    }
+
+    .github-link:hover {
+        color: var(--accent);
+    }
+</style>

@@ -1,0 +1,49 @@
+<nav>
+    <a href="/">HOME</a>
+
+    <div class = "links">
+        <a href="/projects">PROJECTS</a>
+        <a href="/writing">WRITING</a>
+        <a href="/learning">LEARNING LOG</a>
+        <a href="/about">ABOUT </a>
+    </div>
+</nav>
+
+<style>
+    nav {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 1.5rem 0rem;
+        border-bottom: 1px solid var(--border);
+    }
+
+    nav div {
+        display: flex;
+        gap: 2rem;
+        color: var(--secondary);
+    }
+
+    nav a {
+        text-decoration: none;
+        color: var(--secondary);
+        font-size: 1rem;
+        letter-spacing: 0.1em;
+        font-weight: 550;
+        margin-bottom: 0.5rem;
+    }
+
+    nav a:hover {
+        text-decoration: underline;
+        color: var(--accent);
+    }
+
+    .logo {
+    font-weight: bold;
+    }
+
+    .links {
+        display: flex;
+        gap: 2rem;
+    }
+</style>

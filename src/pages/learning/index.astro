@@ -1,0 +1,193 @@
+---
+import Layout from "../../layouts/Layouts.astro";
+import { getCollection } from "astro:content";
+
+const entries = await getCollection("learningLog");
+
+entries.sort((a, b) => 
+    b.data.date.getTime() - a.data.date.getTime()
+);
+---
+<Layout title = "Learning Log | Olivia McFadden">
+    <section class="learning-header">
+        <p class="eyebrow">LEARNING LOG</p>
+        <h1>Documenting the process, not just the outcome.</h1>
+
+        <p class="text">
+            A record of what I'm learning, what I'm building, and how my approach develops over time.
+        </p>
+    </section>
+    <section class="updates">
+        <div class="section-heading">
+            <p class="eyebrow">WEEKLY UPDATES</p>
+            <h2>Recent Entries</h2>
+        </div>
+
+        <div class="entries">
+            {entries.map((entry) => (
+                <a
+                    href={`/learning/${entry.id}`}
+                    class="entry-card"
+                >
+                    <p class="entry-date">
+                        {entry.data.date.toLocaleDateString("en-GB", {
+                            day: "numeric",
+                            month: "long",
+                            year: "numeric",
+                        })}
+                    </p>
+
+                    <h3>{entry.data.title}</h3>
+
+                    <p class = "entry-description">{entry.data.description}</p>
+
+                    <span class="read-more">
+                        Read entry →
+                    </span>
+                </a>
+            ))}
+        </div>
+    </section>
+    <section class="about-log">
+        <h2>Why I'm Keeping a Learning Log</h2>
+
+        <p class="text">
+            This log is more for myself, to keep track of my own progress, but I 
+            figured it would be useful to put it on here so that others can see my thoughts and process as 
+            I continue my learning journey. I intend to update this weekly - some weeks may be more 
+            productive than others (the wonderful life of being a uni student), but I think it would be 
+            really great to be able to look back on everything I have learned.
+        </p>
+    </section>
+
+    <section class="how-i-work">
+        <h2>My Style of Working</h2>
+        <p class = "bold"> Coding </p>
+        <p class = "text">
+            At the moment, my main approach to coding is always to make things as easy and simple as 
+            possible - mainly for the sake of future me, or anyone else who looks at my code. For me, this 
+            looks like having plenty of concise comments which explain what the code does and why it's there.
+            I find that writing these comments makes sure I actually understand the code I'm writing, because 
+            it forces me to explain what's going on, and makes it so much easier to come back to. It's really
+            important to me that I understand what my code does - I find it is so much easier to pinpoint errors
+            and make tweaks when I know what I'm looking for.
+            <br>
+            <br>
+            When it comes to Python stuff, I always prefer to use a Jupyter Notebook. I like being able to 
+            break the code up into cells, and having the option of writing markdown cells - this way I can give
+            an overview of what the coding cells do, and use comments to explain specific lines of code. I also
+            feel like being able to break parts up into individual cells makes a project much more readable -
+            I'm not big on having big blocks of code.
+        </p>
+    </section>
+</Layout>
+
+<style>
+    .learning-header {
+        padding: 1rem 0 4rem;
+    }
+
+    .eyebrow {
+        color: var(--accent);
+        font-size: 0.8rem;
+        letter-spacing: 0.15em;
+        font-weight: 600;
+        margin-bottom: 1rem;
+    }
+
+    h1 {
+        font-size: clamp(3rem, 7vw, 6rem);
+        line-height: 1;
+        letter-spacing: -0.04em;
+        margin: 0 0 1.5rem;
+    }
+
+    .text {
+        color: var(--secondary);
+        font-size: 1.05rem;
+        line-height: 1.5;        
+    }
+
+    .bold {
+        font-weight: bold;
+        color: black;
+    }    
+
+    .page-header > p:last-child {
+        color: var(--secondary);
+        font-size: 1.15rem;
+        line-height: 1.6;
+    }
+
+     .entries {
+        padding-bottom: 1rem;
+    }
+
+    .section-label {
+        color: var(--accent);
+        font-size: 0.75rem;
+        font-weight: 600;
+        letter-spacing: 0.15em;
+        margin-bottom: 1.5rem;
+    }
+
+    .entries {
+        display: flex;
+        flex-direction: column;
+    }
+
+    .entry-card {
+        padding: 1rem 1rem;
+        border-top: 1px solid var(--border);
+
+        text-decoration: none;
+        color: inherit;
+
+        transition: background 0.2s ease;
+    }
+
+    .entry-card:last-child {
+        border-bottom: 1px solid var(--border);
+    }
+
+    .entry-card:hover {
+        background: var(--surface);
+    }
+
+    .entry-date {
+        color: var(--accent);
+        font-size: 0.85rem;
+        font-weight: 600;
+    }
+
+    h2 {
+        font-size: 1.8rem;
+        letter-spacing: -0.02em;
+        margin: 0 0 0.75rem;
+        margin-top: 2rem
+    }
+
+    .entry-description {
+        color: var(--secondary);
+        line-height: 1.6;
+        max-width: 650px;
+        margin: 0 0 1rem;
+    }
+
+    .read-more:hover {
+        color: var(--accent);
+    }
+
+
+    @media (max-width: 600px) {
+        .entry-card {
+            grid-template-columns: 1fr auto;
+            gap: 1rem;
+        }
+
+        h2 {
+            font-size: 1.5rem;
+        }
+
+    }
+</style>

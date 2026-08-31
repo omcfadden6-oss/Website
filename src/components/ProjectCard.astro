@@ -1,0 +1,84 @@
+---
+interface Props {
+    number: string;
+    title: string;
+    category: string;
+    description: string;
+    href: string;
+}
+
+const { number, title, category, description, href } = Astro.props;
+---
+
+<article class="project-card">
+    <div class="project-number">{number}</div>
+
+    <div class="project-content">
+        <p class="category">{category}</p>
+
+        <h2>{title}</h2>
+
+        <p class="description">{description}</p>
+
+        <a href={href}>View project <span>→</span></a>
+    </div>
+</article>
+
+<style>
+    .project-card {
+        display: grid;
+        grid-template-columns: 10px 1fr;
+        gap: 2rem;
+        padding: 2rem 0;
+        border-top: 1px solid var(--border);
+    }
+
+    .project-number {
+        color: var(--accent);
+        font-size: 0.85rem;
+        font-weight: 600;
+        letter-spacing: 0.1em;
+    }
+
+    .project-content {
+        max-width: 900px;
+    }
+
+    .category {
+        color: var(--secondary);
+        font-size: 0.8rem;
+        letter-spacing: 0.1em;
+        font-weight: 600;
+        margin: 0 0 1rem;
+    }
+
+    h2 {
+        font-size: clamp(2rem, 4vw, 3.5rem);
+        line-height: 1;
+        letter-spacing: -0.03em;
+        margin: 0 0 1.25rem;
+    }
+
+    .description {
+        color: var(--secondary);
+        font-size: 1.05rem;
+        line-height: 1.6;
+        margin-bottom: 2rem;
+    }
+
+    a {
+        color: var(--text);
+        text-decoration: none;
+        font-weight: 600;
+    }
+
+    a span {
+        color: var(--accent);
+        margin-left: 0.4rem;
+        transition: margin-left 0.2s ease;
+    }
+
+    a:hover span {
+        margin-left: 0.7rem;
+    }
+</style>

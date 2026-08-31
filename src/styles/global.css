@@ -1,0 +1,33 @@
+:root {
+    font-family: Arial, sans-serif;
+
+    --background: #faf9f8;
+    --text: #181718;
+    --secondary: #6f6b6d;
+    --border: #e5e1e2;
+
+    --accent: #c9829b;
+    --accent-light: #f2e3e8;
+
+    color: var(--text);
+    background: var(--background);
+}
+
+* {
+    box-sizing: border-box;
+}
+
+body {
+    margin: 0;
+    padding: 1.5rem 3rem;
+}
+
+main {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 3rem;
+}
+
+html {
+    scrollbar-gutter: stable;
+}

@@ -1,0 +1,189 @@
+---
+import Layout from "../../layouts/Layouts.astro";
+import { getCollection } from "astro:content";
+
+const posts = await getCollection("writing");
+
+posts.sort(
+    (a, b) => b.data.date.valueOf() - a.data.date.valueOf()
+);
+---
+
+<Layout title="Writing | Olivia McFadden">
+    <header class="page-header">
+        <p class="eyebrow">WRITING</p>
+        <h1>Articles & Analysis</h1>
+        <p>
+            Race analysis, technical explorations and observations
+            from across motorsport.
+        </p>
+    </header>
+
+    <section class="articles">
+        <p class="section-label">LATEST ARTICLES</p>
+        <div class="article-list">
+            {posts.map((post, index) => (
+                <a
+                    href={`/writing/${post.id}`}
+                    class="article-card"
+                >
+                    <div class="article-number">
+                        {String(index + 1).padStart(2, "0")}
+                    </div>
+                    <div class="article-content">
+                        <p class="article-category">
+                            {post.data.category}
+                        </p>
+                        <h2>
+                            {post.data.title}
+                        </h2>
+                        <p class="article-description">
+                            {post.data.description}
+                        </p>
+                        <p class="article-date">
+                            {post.data.date.toLocaleDateString("en-GB", {
+                                day: "numeric",
+                                month: "long",
+                                year: "numeric"
+                            })}
+                        </p>
+                    </div>
+                    <span class="article-arrow">↗</span>
+                </a>
+            ))}
+        </div>
+    </section>
+</Layout>
+
+
+<style>
+    .page-header {
+        padding: 1rem 0 4rem;
+        max-width: 900px;
+    }
+
+    .eyebrow {
+        color: var(--accent);
+        font-size: 0.8rem;
+        letter-spacing: 0.15em;
+        font-weight: 600;
+        margin-bottom: 1rem;
+    }
+
+    h1 {
+        font-size: clamp(3rem, 7vw, 6rem);
+        line-height: 1;
+        letter-spacing: -0.04em;
+        margin: 0 0 1.5rem;
+    }
+
+    .page-header > p:last-child {
+        color: var(--secondary);
+        font-size: 1.15rem;
+        line-height: 1.6;
+    }
+
+
+    /* ARTICLES */
+
+    .articles {
+        padding-bottom: 4rem;
+    }
+
+    .section-label {
+        color: var(--accent);
+        font-size: 0.75rem;
+        font-weight: 600;
+        letter-spacing: 0.15em;
+        margin-bottom: 1.5rem;
+    }
+
+    .article-list {
+        display: flex;
+        flex-direction: column;
+    }
+
+    .article-card {
+        display: grid;
+        grid-template-columns: 60px 1fr auto;
+        gap: 2rem;
+
+        padding: 2rem 1rem;
+
+        border-top: 1px solid var(--border);
+
+        text-decoration: none;
+        color: inherit;
+
+        transition: background 0.2s ease;
+    }
+
+    .article-card:last-child {
+        border-bottom: 1px solid var(--border);
+    }
+
+    .article-card:hover {
+        background: var(--surface);
+    }
+
+    .article-number {
+        color: var(--accent);
+        font-size: 0.85rem;
+        font-weight: 600;
+    }
+
+    .article-category {
+        color: var(--secondary);
+        font-size: 0.75rem;
+        letter-spacing: 0.12em;
+        margin-bottom: 0.75rem;
+    }
+
+    h2 {
+        font-size: 1.8rem;
+        letter-spacing: -0.02em;
+        margin: 0 0 0.75rem;
+    }
+
+    .article-description {
+        color: var(--secondary);
+        line-height: 1.6;
+        max-width: 650px;
+        margin: 0 0 1rem;
+    }
+
+    .article-date {
+        color: var(--secondary);
+        font-size: 0.8rem;
+        margin: 0;
+    }
+
+    .article-arrow {
+        color: var(--accent);
+        font-size: 1.5rem;
+        transition: transform 0.2s ease;
+    }
+
+    .article-card:hover .article-arrow {
+        transform: translate(4px, -4px);
+    }
+
+
+    @media (max-width: 600px) {
+
+        .article-card {
+            grid-template-columns: 1fr auto;
+            gap: 1rem;
+        }
+
+        .article-number {
+            display: none;
+        }
+
+        h2 {
+            font-size: 1.5rem;
+        }
+
+    }
+
+</style>
