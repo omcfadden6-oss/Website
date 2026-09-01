@@ -118,4 +118,13 @@ const { Content } = await render(entry);
         border-radius: 8px;
     }
 
+    .article-content :global(a) {
+        color: var(--text);
+        text-decoration: none;
+        font-weight: 600;
+    }
+
+    .article-content :global(a:hover) {
+        color: var(--accent);
+    }
 </style>
