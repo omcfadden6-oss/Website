@@ -1,11 +1,15 @@
 ---
-import Layout from "../layouts/Layouts.astro";
-import ProjectCard from "../components/ProjectCard.astro";
+import Layout from "../../layouts/Layouts.astro";
+import ProjectCard from "../../components/ProjectCard.astro";
+import { getCollection } from "astro:content";
+
+const projects = await getCollection("projects");
 ---
 
 <Layout title="Projects | Olivia McFadden">
 
     <header class="page-header">
+
         <p class="eyebrow">PROJECTS</p>
 
         <h1>My Work</h1>
@@ -14,20 +18,24 @@ import ProjectCard from "../components/ProjectCard.astro";
             A collection of technical, scientific and motorsport
             projects exploring data analysis, physics and vehicle performance.
         </p>
+
     </header>
 
-    <ProjectCard
-        number="01"
-        title="Monaco 2026 — Qualifying Analysis"
-        category="F1 · DATA ANALYSIS · PYTHON"
-        description="An investigation into how Kimi Antonelli secured pole position over Max Verstappen through comparative telemetry analysis."
-        href="/projects/monaco"
-    />
+    {projects.map((project) => (
+        <ProjectCard
+            number={project.data.number}
+            title={project.data.title}
+            category={project.data.category}
+            description={project.data.description}
+            href={`/projects/${project.id}`}
+        />
+    ))}
+
 </Layout>
 
 <style>
     .page-header {
-        padding: 1rem 0 4rem;
+        padding: 1rem 0 1rem;
         max-width: 900px;
     }
 

@@ -1,0 +1,168 @@
+---
+import Layout from "../../layouts/Layouts.astro";
+import { getCollection, render } from "astro:content";
+
+export async function getStaticPaths() {
+    const projects = await getCollection("projects");
+
+    return projects.map((project) => ({
+        params: { slug: project.id },
+        props: { project },
+    }));
+}
+
+const { project } = Astro.props;
+const { Content } = await render(project);
+---
+
+<Layout title={`${project.data.title} | Olivia McFadden`}>
+    <header class="project-header">
+
+        <p class="eyebrow">
+            PROJECT · {project.data.number}
+        </p>
+
+        <h1>{project.data.title}</h1>
+
+        <div class="meta">
+            {project.data.category.split(" · ").map((item) => (
+                <span>{item}</span>
+            ))}
+        </div>
+
+        <p class="subtitle">
+            {project.data.subtitle}
+        </p>
+
+    </header>
+
+    <article class="project-content">
+        <Content />
+    </article>
+
+</Layout>
+
+<style>
+    .project-header {
+        padding: 0 0 0rem;
+    }
+
+    .eyebrow {
+        color: var(--accent);
+        font-size: 0.8rem;
+        letter-spacing: 0.15em;
+        font-weight: 600;
+        margin-bottom: 1.5rem;
+    }
+
+    h1 {
+        font-size: clamp(3rem, 4vw, 6rem);
+        line-height: 0.95;
+        letter-spacing: -0.04em;
+        margin: 0 0 2rem;
+        text-transform: uppercase;
+    }
+
+    .meta {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 0.6rem;
+        margin-bottom: 1.5rem;
+    }
+
+    .meta span {
+        border: 1px solid var(--border);
+        padding: 0.5rem 0.8rem;
+        font-size: 0.8rem;
+        color: var(--secondary);
+    }
+
+    .subtitle {
+        color: var(--secondary);
+        font-size: 1.3rem;
+        line-height: 1.6;
+    }
+
+    .project-content {
+    }
+
+    .project-content :global(h2) {
+        border-top: 1px solid var(--border);
+        padding-top: 2rem;
+        margin-bottom: 1rem;
+
+        color: var(--accent);
+        font-size: 0.8rem;
+        letter-spacing: 0.15em;
+        font-weight: 600;
+    }
+
+    .project-content :global(h3) {
+        color: var(--text);
+        font-size: 2rem;
+        line-height: 1.1;
+        letter-spacing: -0.02em;
+        margin: 0 0 1.5rem;
+    }
+
+    .project-content :global(h4) {
+        color: var(--text);
+        font-size: 1.6rem;
+        line-height: 1.1;
+        letter-spacing: -0.02em;
+        margin: 0 0 1rem;
+        padding-top: 1.5rem;
+        border-top: 1px solid var(--border);
+    }
+
+    .project-content :global(p) {
+        color: var(--secondary);
+        font-size: 1.05rem;
+        line-height: 1.6;
+        margin-bottom: 1.5rem;
+    }
+
+    .project-content :global(ul) {
+        padding-left: 1.5rem;
+        margin-bottom: 2rem;
+    }
+
+    .project-content :global(li) {
+        color: var(--secondary);
+        font-size: 1.05rem;
+        line-height: 1.6;
+        margin-bottom: 1rem;
+    }
+
+    .project-content :global(strong) {
+        color: var(--text);
+        font-weight: 700;
+    }
+
+    .project-content :global(img) {
+        display: block;
+        width: 100%;
+        height: auto;
+        margin: 1.5rem 0 1rem;
+    }
+
+    .project-content :global(em) {
+        display: block;
+        color: var(--secondary);
+        font-size: 0.85rem;
+        line-height: 1.5;
+        margin-bottom: 1rem;
+        border-bottom: 1px solid var(--border);
+        padding: 0 0 1rem;
+    }
+
+    .project-content :global(a) {
+        color: var(--text);
+        text-decoration: none;
+        font-weight: 600;
+    }
+
+    .project-content :global(a:hover) {
+        color: var(--accent);
+    }
+</style>

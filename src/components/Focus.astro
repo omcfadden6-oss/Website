@@ -1,0 +1,81 @@
+<section class="focus">
+
+    <p class="eyebrow">CURRENTLY EXPLORING</p>
+
+    <div class="focus-grid">
+
+        <div class="focus-item">
+            <h2>Vehicle Dynamics</h2>
+            <p>
+                Developing my understanding of vehicle behaviour,
+                performance and data through independent analysis
+                and Formula Student.
+            </p>
+        </div>
+
+        <div class="focus-item">
+            <h2>Data Analysis</h2>
+            <p>
+                Using Python, telemetry and data-driven approaches
+                to investigate performance and turn information
+                into meaningful insights.
+            </p>
+        </div>
+
+        <div class="focus-item">
+            <h2>Motorsport</h2>
+            <p>
+                Building practical experience and learning more
+                about the engineering, people and decisions behind
+                competitive motorsport.
+            </p>
+        </div>
+
+    </div>
+
+</section>
+
+<style>
+    .focus {
+        margin-top: 3rem;
+        border-top: 1px solid var(--border);
+        padding: 1rem 0 0;
+    }
+
+    .eyebrow {
+        color: var(--accent);
+        font-size: 0.8rem;
+        letter-spacing: 0.15em;
+        font-weight: 600;
+        margin-bottom: 1rem;
+    }
+
+    .focus-grid {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        gap: 2rem;
+    }
+
+    .focus-item {
+        border-left: 1px solid var(--border);
+        padding-left: 1.5rem;
+    }
+
+    h2 {
+        font-size: 1.2rem;
+        margin: 0 0 0.8rem;
+    }
+
+    p {
+        color: var(--secondary);
+        line-height: 1.6;
+        margin: 0;
+    }
+
+    @media (max-width: 700px) {
+        .focus-grid {
+            grid-template-columns: 1fr;
+            gap: 2.5rem;
+        }
+    }
+</style>

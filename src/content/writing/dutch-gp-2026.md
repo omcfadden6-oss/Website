@@ -1,7 +1,7 @@
 ---
 title: "Farewell Zandvoort - The Talking Points From the Final Dutch Grand Prix"
 date: 2026-08-28
-description: ""
+description: "A breakdown of the most important talking points from Round 12."
 category: "F1 · RACE ANALYSIS"
 ---
 # Overview

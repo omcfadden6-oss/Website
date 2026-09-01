@@ -1,0 +1,156 @@
+---
+import { getCollection } from "astro:content";
+
+const project = await getCollection("projects");
+const writing = await getCollection("writing");
+const learning = await getCollection("learningLog");
+
+const latestWriting = writing
+    .sort((a, b) => b.data.date.valueOf() - a.data.date.valueOf())[0];
+
+const latestLearning = learning
+    .sort((a, b) => b.data.date.valueOf() - a.data.date.valueOf())[0];
+
+const latestProject = project.find((p) => p.data.featured) || project[0];
+---
+
+<section class="links">
+
+    <p class="eyebrow">EXPLORE</p>
+
+    <div class="links-grid">
+
+        <!-- PROJECTS -->
+
+        {latestProject && (
+            <a href={`/projects/${latestProject.id}`} class="link-card">
+                <div>
+                    <p class="label">FEATURED PROJECT</p>
+
+                    <h2>{latestProject.data.title}</h2>
+
+                    <p class="description">
+                        {latestProject.data.description}
+                    </p>
+                </div>
+
+                <span class="arrow">→</span>
+            </a>
+        )}
+
+
+        <!-- WRITING -->
+
+        {latestWriting && (
+            <a href={`/writing/${latestWriting.id}`} class="link-card">
+                <div>
+                    <p class="label">LATEST WRITING</p>
+
+                    <h2>{latestWriting.data.title}</h2>
+
+                    <p class="description">
+                        {latestWriting.data.description}
+                    </p>
+                </div>
+
+                <span class="arrow">→</span>
+            </a>
+        )}
+
+
+        <!-- LEARNING LOG -->
+
+        {latestLearning && (
+            <a href={`/learning/${latestLearning.id}`} class="link-card">
+                <div>
+                    <p class="label">LATEST LEARNING</p>
+
+                    <h2>{latestLearning.data.title}</h2>
+
+                    <p class="description">
+                        {latestLearning.data.description}
+                    </p>
+                </div>
+
+                <span class="arrow">→</span>
+            </a>
+        )}
+
+    </div>
+
+</section>
+
+<style>
+    .links {
+        margin-top: 3rem;
+    }
+
+    .eyebrow {
+        color: var(--accent);
+        font-size: 0.8rem;
+        letter-spacing: 0.15em;
+        font-weight: 600;
+        margin-bottom: 2rem;
+    }
+
+    .links-grid {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        gap: 1rem;
+    }
+
+    .link-card {
+        min-height: 250px;
+        padding: 1.5rem;
+        border: 1px solid var(--border);
+        text-decoration: none;
+        color: var(--text);
+
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+
+        transition: border-color 0.2s ease,
+                    transform 0.2s ease;
+    }
+
+    .link-card:hover {
+        border-color: var(--accent);
+        transform: translateY(-3px);
+    }
+
+    .label {
+        color: var(--accent);
+        font-size: 0.7rem;
+        letter-spacing: 0.15em;
+        font-weight: 600;
+        margin: 0 0 1.5rem;
+    }
+
+    h2 {
+        font-size: 1.4rem;
+        letter-spacing: -0.02em;
+        margin: 0 0 0.8rem;
+    }
+
+    .description {
+        color: var(--secondary);
+        line-height: 1.6;
+        margin: 0;
+    }
+
+    .arrow {
+        font-size: 1.2rem;
+        align-self: flex-end;
+    }
+
+    @media (max-width: 800px) {
+        .links-grid {
+            grid-template-columns: 1fr;
+        }
+
+        .link-card {
+            min-height: 200px;
+        }
+    }
+</style>

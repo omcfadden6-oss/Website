@@ -21,8 +21,25 @@ const learningLog = defineCollection({
     }),
 });
 
+const projects = defineCollection({
+    loader: glob({
+        pattern: "**/*.md",
+        base: "./src/content/projects"
+    }),
+    schema: z.object({
+        number: z.string(),
+        title: z.string(),
+        category: z.string(),
+        description: z.string(),
+        subtitle: z.string(),
+        featured: z.boolean().default(false),
+    }),
+});
+
+
 export const collections = {
     writing,
     learningLog,
+    projects,
 };
 
