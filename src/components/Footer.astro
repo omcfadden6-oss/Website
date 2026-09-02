@@ -1,6 +1,10 @@
 <footer>
     <div class="footer-content">
-        <p>© 2026 Olivia McFadden</p>
+        <div class="footer-info">
+            <p class="contact-text">
+                Please feel free to get in touch with any questions or feedback.
+            </p>
+        </div>        
 
         <div class="links">
             <a href="mailto:omcfadden6@gmail.com">Email</a>
@@ -11,6 +15,16 @@
 </footer>
 
 <style>
+    .footer-info {
+        display: flex;
+        flex-direction: column;
+        gap: 0.4rem;
+    }
+
+    .contact-text {
+        font-size: 0.8rem;
+    }
+
     footer {
         border-top: 1px solid var(--border);
         margin-top: 6rem;
