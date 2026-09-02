@@ -1,8 +1,9 @@
 <footer>
     <div class="footer-content">
         <div class="footer-info">
+            <p>© 2026 Olivia McFadden</p>
             <p class="contact-text">
-                Please feel free to get in touch with any questions or feedback.
+                Please feel free to get in touch with any questions or feedback!
             </p>
         </div>        
 
@@ -56,5 +57,13 @@
 
     a:hover {
         color: var(--accent);
+    }
+
+    @media (max-width: 768px) {
+        .footer-content {
+            flex-direction: column;
+            align-items: flex-start;
+            gap: 1.5rem;
+        }
     }
 </style>
