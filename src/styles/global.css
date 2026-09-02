@@ -28,6 +28,17 @@ main {
     padding: 0 3rem;
 }
 
+@media (max-width: 768px) {
+    body {
+        padding: 1rem;
+    }
+
+    main {
+        max-width: none;
+        padding: 0 1rem;
+    }
+}
+
 html {
     scrollbar-gutter: stable;
 }
