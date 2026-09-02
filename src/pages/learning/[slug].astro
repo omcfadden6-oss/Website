@@ -13,10 +13,37 @@ export async function getStaticPaths() {
 
 const { entry } = Astro.props;
 const { Content } = await render(entry);
+
+// Get all learning log entries
+const allEntries = await getCollection("learningLog");
+
+// Sort entries by date, oldest to newest
+const sortedEntries = allEntries.sort(
+    (a, b) => a.data.date.getTime() - b.data.date.getTime()
+);
+
+// Find the current entry
+const currentIndex = sortedEntries.findIndex(
+    (item) => item.id === entry.id
+);
+
+// Find previous and next entries
+const previousEntry =
+    currentIndex > 0
+        ? sortedEntries[currentIndex - 1]
+        : null;
+
+const nextEntry =
+    currentIndex < sortedEntries.length - 1
+        ? sortedEntries[currentIndex + 1]
+        : null;
 ---
 
 <Layout title={`${entry.data.title} | Olivia McFadden`}>
     <article>
+        <a href="/learning/" class="back-link">
+            ← Back to Learning Log
+        </a>
         <header class="article-header">
             <h1>{entry.data.title}</h1>
             <p class="date">
@@ -33,11 +60,64 @@ const { Content } = await render(entry);
         <div class="article-content">
             <Content />
         </div>
+        <nav class="week-navigation">
+            {previousEntry ? (
+
+                <a
+                    href={`/learning/${previousEntry.id}`}
+                    class="week-link previous"
+                >
+                    <span class="nav-label">← Previous Week</span>
+
+                    <span class="nav-title">
+                        {previousEntry.data.title}
+                    </span>
+                </a>
+
+            ) : (
+
+                <div></div>
+
+            )}
+
+            {nextEntry ? (
+
+                <a
+                    href={`/learning/${nextEntry.id}`}
+                    class="week-link next"
+                >
+                    <span class="nav-label">Next Week →</span>
+
+                    <span class="nav-title">
+                        {nextEntry.data.title}
+                    </span>
+                </a>
+
+            ) : (
+
+                <div></div>
+
+            )}
+
+        </nav>
     </article>
 </Layout>
 
 
 <style>
+    .back-link {
+        display: inline-block;
+        margin-top: 1rem;
+        color: var(--secondary);
+        text-decoration: none;
+        font-size: 0.95rem;
+        transition: opacity 0.2s ease;
+    }
+
+    .back-link:hover {
+        color: var(--accent);
+    }
+
     article {
         margin: 0 auto;
     }
@@ -126,5 +206,45 @@ const { Content } = await render(entry);
 
     .article-content :global(a:hover) {
         color: var(--accent);
+    }
+
+    .week-navigation {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 2rem;
+
+        padding-top: 2rem;
+        border-top: 1px solid var(--border);
+    }
+
+    .week-link {
+        display: flex;
+        flex-direction: column;
+
+        text-decoration: none;
+        color: var(--text);
+
+        transition: opacity 0.2s ease;
+    }
+
+    .week-link:hover {
+        opacity: 0.7;
+    }
+
+    .week-link.next {
+        text-align: right;
+        align-items: flex-end;
+    }
+
+    .nav-label {
+        color: var(--accent);
+        font-size: 0.85rem;
+
+        margin-bottom: 0.4rem;
+    }
+
+    .nav-title {
+        font-size: 1rem;
+        font-weight: 600;
     }
 </style>

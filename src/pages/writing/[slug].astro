@@ -18,13 +18,12 @@ const { Content } = await render(post);
 <Layout title={`${post.data.title} | Olivia McFadden`}>
 
     <article>
-
+        <a href="/writing/" class="back-link">
+            ← Back to Writing
+        </a>
         <header class="article-header">
-
-            <p class="eyebrow">{post.data.category}</p>
-
             <h1>{post.data.title}</h1>
-
+            <p class="eyebrow">{post.data.category}</p>
             <p class="date">
                 {post.data.date.toLocaleDateString("en-GB", {
                     day: "numeric",
@@ -38,7 +37,6 @@ const { Content } = await render(post);
             </p>
 
         </header>
-
         <div class="article-content">
             <Content />
         </div>
@@ -49,6 +47,18 @@ const { Content } = await render(post);
 
 
 <style>
+    .back-link {
+        display: inline-block;
+        margin-top: 1rem;
+        color: var(--secondary);
+        text-decoration: none;
+        font-size: 0.95rem;
+        transition: opacity 0.2s ease;
+    }
+
+    .back-link:hover {
+        color: var(--accent);
+    }
 
     article {
         margin: 0 auto;

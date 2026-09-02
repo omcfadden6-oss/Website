@@ -16,14 +16,14 @@ const { Content } = await render(project);
 ---
 
 <Layout title={`${project.data.title} | Olivia McFadden`}>
+        <a href="/projects/" class="back-link">
+            ← Back to Projects
+        </a>
     <header class="project-header">
-
+        <h1>{project.data.title}</h1>
         <p class="eyebrow">
             PROJECT · {project.data.number}
         </p>
-
-        <h1>{project.data.title}</h1>
-
         <div class="meta">
             {project.data.category.split(" · ").map((item) => (
                 <span>{item}</span>
@@ -43,6 +43,20 @@ const { Content } = await render(project);
 </Layout>
 
 <style>
+    .back-link {
+        display: inline-block;
+        margin-top: 1rem;
+        margin-bottom: 2rem;
+        color: var(--secondary);
+        text-decoration: none;
+        font-size: 0.95rem;
+        transition: opacity 0.2s ease;
+    }
+
+    .back-link:hover {
+        color: var(--accent);
+    }
+
     .project-header {
         padding: 0 0 0rem;
     }
